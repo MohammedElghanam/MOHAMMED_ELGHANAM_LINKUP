@@ -5,7 +5,7 @@ services:
       dockerfile: Dockerfile
     container_name: backend-container
     ports:
-      - "3001:3000" 
+      - "5001:5000" 
     volumes:
       - ./back-end:/back-end-linkup 
     networks:
@@ -17,7 +17,7 @@ services:
       dockerfile: Dockerfile
     container_name: frontend-container
     ports:
-      - "5173:5173"
+      - "3001:3000"
     depends_on:
       - backend
     networks:
