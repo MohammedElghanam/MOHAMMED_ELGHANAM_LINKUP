@@ -24,8 +24,17 @@ export class AuthController {
     }
 
     @Post('/login')
-    login (@Body() registerDto: RegisterDto): Promise<{ token: string }> {
-        return this.authservice.login(registerDto);
+    async login (@Body() registerDto: RegisterDto, @Res() res: Response): Promise<Response> {
+        try {
+            const result = await this.authservice.login(registerDto);
+            return res.status(201).json({
+                token: result.token,
+            });
+        } catch (error) {
+            return res.status(400).json({
+                message: error.message,
+            });
+        }
     }
 
 }
