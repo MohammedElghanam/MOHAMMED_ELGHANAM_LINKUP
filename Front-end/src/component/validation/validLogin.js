@@ -1,12 +1,9 @@
 
-const validate = (name, email, password) => {
+const validate = (email, password) => {
     const errors = {
-        name: '',
         email: '',
         password: '',
     };
-
-    if (!name) errors.name = 'Name is required';
 
     const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!email) {

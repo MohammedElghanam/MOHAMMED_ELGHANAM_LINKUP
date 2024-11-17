@@ -37,13 +37,11 @@ const useRegister = () => {
 
                     setsuccessMessage(response.data.message);
                     console.log(response.data.user);
-                    // alert(response.data.message);
                 }
 
             } catch (error) {
                 if (error.response && error.response.status === 400) {
                     setErrorMessage(error.response.data.message);
-                    // alert(error.response.data.message);
                     console.log('Error registering user:', error.response.data.message);
                 } else {
                     setErrorMessage('An unexpected error occurred');

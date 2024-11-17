@@ -1,41 +1,53 @@
 import React, { useState, useRef} from 'react';
 import axios from 'axios'; 
 import Forgot from './forgot';
+import useLogin from '../../hooks/useLogin';
+import Error from '../alerts/Error';
 
 export default function Login () {
 
+    const {
+        email,
+        setEmail,
+        password,
+        setPassword,
+        handleSubmit,
+        errors,
+        errorMessage,
+        setErrorMessage,
+    } = useLogin();
    
 
-    const formData = {}
+    // const formData = {}
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        try {
-            axios.post('/login', formData)
-            .then((response) => {
-                localStorage.setItem('token', response.data.token);
-                console.log('Login successful:', response.data);                
-                alert('Login successful:'); 
-            })
-            .catch((error) => {
-                console.error('Login error:', error.response ? error.response.data : error.message);
+    // const handleSubmit = (e) => {
+    //     e.preventDefault();
+    //     try {
+    //         axios.post('/login', formData)
+    //         .then((response) => {
+    //             localStorage.setItem('token', response.data.token);
+    //             console.log('Login successful:', response.data);                
+    //             alert('Login successful:'); 
+    //         })
+    //         .catch((error) => {
+    //             console.error('Login error:', error.response ? error.response.data : error.message);
 
-                if (error.response && error.response.status === 400 || error.response.status === 500) {
-                    console.error('Login error:', error.response.data.error); 
-                    alert(error.response.data.error); 
-                } else {
-                    console.error('Login error:', error.response ? error.response.data : error.message);
-                }
-            }); 
-        } catch (error) {
-            if (error.response && error.response.status === 400 || error.response.status === 500) {
-                console.error('Login error:', error.response.data.error); 
-                alert(error.response.data.error); 
-            } else {
-                console.error('Login error:', error.response ? error.response.data : error.message);
-            }
-        }
-    };
+    //             if (error.response && error.response.status === 400 || error.response.status === 500) {
+    //                 console.error('Login error:', error.response.data.error); 
+    //                 alert(error.response.data.error); 
+    //             } else {
+    //                 console.error('Login error:', error.response ? error.response.data : error.message);
+    //             }
+    //         }); 
+    //     } catch (error) {
+    //         if (error.response && error.response.status === 400 || error.response.status === 500) {
+    //             console.error('Login error:', error.response.data.error); 
+    //             alert(error.response.data.error); 
+    //         } else {
+    //             console.error('Login error:', error.response ? error.response.data : error.message);
+    //         }
+    //     }
+    // };
 
 
     return <>
@@ -46,24 +58,28 @@ export default function Login () {
                     <div className=" flex flex-col justify-center items-start mb-3">
                         <label className=" text-xs lg:text-sm font-medium text-gray-900 mb-1" htmlFor="email">Email Address <span className=" text-red-600">*</span></label>
                         <input 
+                            onChange={(e) => { setEmail(e.target.value) } }
+                            value={email}
                             id="email" 
                             type="email"
                             name="email"
-                            value={formData.email}
                             placeholder=" Enter Email Address" 
                             className=" w-60 lg:w-72 h-8 lg:h-9 px-1 rounded-md border-[0.5px] border-gray-500 focus:border-blue-600 text-xs lg:text-sm" 
                         />
+                        {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email}</p>}
                     </div>
                     <div className="  flex flex-col justify-center items-start mb-3">
                         <label className=" text-xs lg:text-sm font-medium text-gray-900 mb-1" htmlFor="password">Password <span className=" text-red-600">*</span></label>
                         <input 
+                            onChange={ (e) => { setPassword(e.target.value) }}
+                            value={password}   
                             id="password" 
                             type="password" 
                             name="password"
-                            value={formData.password}   
                             placeholder=" Enter Password" 
                             className=" w-60 lg:w-72 h-8 lg:h-9 px-1 rounded-md border-[0.5px] border-gray-500 focus:border-blue-600 text-xs lg:text-sm" 
                         />
+                        {errors.password && <p className="text-red-500 text-xs mt-1">{errors.password}</p>}
                     </div>
                     <div className=" flex justify-between items-center mb-2">
                         <div className="flex justify-start items-end gap-2">
@@ -105,5 +121,6 @@ export default function Login () {
             </div>
         </div>
         {/* {  ? <Forgot /> : ''} */}
+        {errorMessage && <Error errorMessage={ errorMessage } setErrorMessage={ setErrorMessage } />}
     </>
 }
