@@ -4,6 +4,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { AuthModule } from './auth/auth.module';
 import { ConfigModule } from '@nestjs/config';
+import { ChatModule } from './chat/chat.module';
 
 @Module({
   imports: [
@@ -11,7 +12,8 @@ import { ConfigModule } from '@nestjs/config';
       isGlobal: true,
     }), 
     MongooseModule.forRoot('mongodb://localhost:27017/LINKUP'),
-    AuthModule],
+    AuthModule,
+    ChatModule],
   controllers: [AppController],
   providers: [AppService],
 })
