@@ -4,6 +4,8 @@ import Register from './component/auth/register';
 import Login from './component/auth/login';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import ChatApp from './component/pages/chatApp';
+import ChatWithAnas from './component/pages/ChatWithAnas';
+import Test from './component/pages/test';
 
 function App() {
   return (
@@ -13,6 +15,9 @@ function App() {
           <Route index='/' element={<Login />}/>
           <Route path='/register' element={<Register />} />
           <Route path='/chat' element={<ChatApp />} />
+          <Route path='/video' element={ <ChatWithAnas /> } />
+          <Route path='/test' element={ <Test /> } />
+          
         </Routes>
       </BrowserRouter>
     </>

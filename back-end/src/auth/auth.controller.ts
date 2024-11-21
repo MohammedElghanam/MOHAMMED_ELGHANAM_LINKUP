@@ -1,4 +1,4 @@
-import { Body, Controller, Post, Res } from '@nestjs/common';
+import { Body, Controller, Get, Post, Res } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { RegisterDto } from './authDto/register.dto';
 import { Response } from 'express';
@@ -34,6 +34,16 @@ export class AuthController {
             return res.status(400).json({
                 message: error.message,
             });
+        }
+    }
+
+    @Get('/getUsers')
+    async getUsers(@Res() res: Response) {
+        const result = await this.authservice.getUsers();
+        if (result.success) {
+          res.status(200).json(result);
+        } else {
+          res.status(500).json(result);
         }
     }
 

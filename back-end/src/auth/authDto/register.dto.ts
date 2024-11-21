@@ -17,3 +17,10 @@ export class RegisterDto {
     @MinLength(8)
     readonly password: string;
 }
+
+export interface ResponseMessage {
+    success: boolean;
+    message: string;
+    data: any;
+}
+  

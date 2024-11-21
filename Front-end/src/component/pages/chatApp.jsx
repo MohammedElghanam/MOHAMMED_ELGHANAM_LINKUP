@@ -28,8 +28,8 @@ export default function ChatApp() {
 
   const fetchMessages = (user) => {
     setSelectedUser(user); 
-    socket.emit('getMessages', { senderId: 'myUserId', receiverId: user.id }); // جلب الرسائل
-    socket.on('messageHistory', (data) => { setMessages(data) }); // تعيين الرسائل
+    socket.emit('getMessages', { senderId: 'myUserId', receiverId: user.id }); 
+    socket.on('messageHistory', (data) => { setMessages(data) }); 
     // console.log(data);
     
   };

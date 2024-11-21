@@ -4,7 +4,7 @@ import { User } from './schemas/user.schema';
 import { Model } from 'mongoose';
 import * as bcrypt from 'bcryptjs';
 import { JwtService } from '@nestjs/jwt';
-import { RegisterDto } from './authDto/register.dto';
+import { RegisterDto, ResponseMessage } from './authDto/register.dto';
 
 @Injectable()
 export class AuthService {
@@ -55,6 +55,23 @@ export class AuthService {
         } catch (error) {
             console.error('Login error:', error);
             throw new Error('Login failed');
+        }
+    }
+
+    async getUsers(): Promise <ResponseMessage> {
+        try {
+            const users = await this.userModel.find();
+            return {
+                success: true,
+                message: 'Users retrived successfly',
+                data: users
+            }
+        } catch (error) {
+            return {
+                success: false,
+                message: 'Failed to retrieve users',
+                data: [],
+            };
         }
     }
 
