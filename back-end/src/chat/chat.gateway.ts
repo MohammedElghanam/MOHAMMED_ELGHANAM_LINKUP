@@ -113,4 +113,5 @@ export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
     const messages = await this.chatService.getMessages(data.senderId, data.receiverId);
     client.emit('messageHistory', messages);
   }
+
 }

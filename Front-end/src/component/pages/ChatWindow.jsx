@@ -5,21 +5,16 @@ export default function ChatWindow({ user, messages, newMessage, setNewMessage, 
     <div className="flex flex-col h-full">
       <div className="p-4 bg-blue-500 text-white font-bold">{user.name}</div>
       <div className="flex-1 overflow-y-scroll p-4 bg-gray-100">
-
         {messages.map((msg, index) => (
           <div
             key={index}
-            className={`p-2 mb-2 rounded max-w-[70%] ${
-              msg.senderId === 'myUserId'
-                ? 'bg-blue-500 text-white self-end ml-auto' 
-                : 'bg-gray-300 text-black self-start mr-auto' 
+            className={`p-2 mb-2 rounded ${
+              msg.senderId === 'myUserId' ? 'bg-blue-500 text-white self-end' : 'bg-gray-300'
             }`}
-            style={{ display: 'flex' }}
           >
             {msg.content}
           </div>
         ))}
-
       </div>
       <div className="p-4 border-t flex">
         <input

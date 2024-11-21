@@ -5,7 +5,9 @@ import { Message } from './schemas/message.schema';
 
 @Injectable()
 export class ChatService {
-  constructor(@InjectModel(Message.name) private messageModel: Model<Message>) {}
+  constructor(
+    @InjectModel(Message.name) private messageModel: Model<Message>
+  ) {}
 
  
   async saveMessage(content: string, senderId: string, receiverId: string): Promise<Message> {
