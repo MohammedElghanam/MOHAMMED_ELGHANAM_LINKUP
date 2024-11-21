@@ -1,9 +1,9 @@
 import React from 'react'
-import Background from '../[slug]/Background'
-import Search from '../[slug]/Search'
-import UserList from '../[slug]/UserList'
-import MyInfo from '../[slug]/MyInfo'
-import Chat from '../[slug]/Chat'
+import Background from '../comon/Background'
+import Search from '../comon/Search'
+import UserList from '../comon/UserList'
+import MyInfo from '../comon/MyInfo'
+import Chat from '../comon/Chat'
 
 export default function Test() {
   return (
