@@ -30,7 +30,7 @@ const useLogin = () => {
                     setEmail('');
                     setPassword('');
                     localStorage.setItem('token', response.data.token);
-                    navigate('/chat')
+                    navigate('/test')
                 }
 
             } catch (error) {

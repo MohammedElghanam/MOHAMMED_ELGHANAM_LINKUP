@@ -9,6 +9,8 @@ const useWebSocket = () => {
     const [selectedUser, setSelectedUser] = useState(null); 
     const [messages, setMessages] = useState([]); 
     const [newMessage, setNewMessage] = useState('');
+    const [auth, setAuth] = useState();
+    
 
     useEffect(() => {
         socket.on('newMessage', (message) => {
@@ -25,7 +27,7 @@ const useWebSocket = () => {
 
     const fetchMessages = (user) => {
         setSelectedUser(user);
-        socket.emit('getMessages', { senderId: 'myUserId', receiverId: user._id }); 
+        socket.emit('getMessages', { senderId: auth, receiverId: user._id }); 
         socket.on('messageHistory', (data) => {
             console.log('Message history:', data);
             setMessages(data);
@@ -80,6 +82,7 @@ const useWebSocket = () => {
         setNewMessage,
         fetchMessages,
         sendMessage,
+        setAuth,
     };
 };
 

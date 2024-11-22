@@ -1,5 +1,5 @@
+import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useEffect } from 'react';
 
 const isAuthenticated = () => {
   const token = localStorage.getItem('token');
@@ -12,7 +12,12 @@ const isAuthenticated = () => {
     const expirationTime = decodedToken.exp * 1000; 
     const currentTime = Date.now();
 
-    return currentTime <= expirationTime; 
+   
+    if (currentTime <= expirationTime) {
+      return decodedToken;  
+    } else {
+      return false; 
+    }
   } catch (error) {
     return false; 
   }
@@ -20,18 +25,19 @@ const isAuthenticated = () => {
 
 const useProtected = ({ children }) => {
   const navigate = useNavigate();
+  const decodedToken = isAuthenticated(); 
 
   useEffect(() => {
-    if (!isAuthenticated()) {
-      navigate('/');
+    if (!decodedToken) {
+      navigate('/'); 
     }
-  }, [navigate]);
+  }, [navigate, decodedToken]);
 
-  if (!isAuthenticated()) {
-    navigate('/');
+  if (!decodedToken) {
+    return null;  
   }
 
-  return children; 
+  return React.cloneElement(children, { userData: decodedToken }); 
 };
 
 export default useProtected;

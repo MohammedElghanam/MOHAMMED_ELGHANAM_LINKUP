@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import React from 'react'
 import Background from '../comon/Background'
 import Search from '../comon/Search'
@@ -5,11 +6,16 @@ import UserList from '../comon/UserList'
 import MyInfo from '../comon/MyInfo'
 import Chat from '../comon/Chat'
 import useWebSocket from '../../hooks/useWebSocket'
+import useUsers from '../../hooks/useUsers';
 
-export default function Test() {
+export default function Test({ userData }) {
 
-    const { selectedUser, messages, newMessage, setNewMessage, fetchMessages, sendMessage } = useWebSocket();
+    const { selectedUser, messages, newMessage, setNewMessage, fetchMessages, sendMessage, setAuth } = useWebSocket();
+    const { searchTerm, setSearchTerm, filteredUsers } = useUsers();
 
+    useEffect(() => {
+        setAuth(userData.userId);
+    }, []);
   return (
     <> 
         <div className=" w-full h-screen flex flex-col justify-start items-center fixed bg-gray-900">
@@ -22,13 +28,13 @@ export default function Test() {
 
                         <div className=" flex flex-col justify-center items-center gap-2 h-full">
 
-                            <Search />
+                            <Search searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
 
-                            <UserList onSelectUser={fetchMessages} />
+                            <UserList onSelectUser={fetchMessages} users={filteredUsers} />
 
                         </div>
 
-                        <MyInfo />
+                        <MyInfo userData={userData} />
 
                     </div>
 
@@ -40,6 +46,7 @@ export default function Test() {
                             newMessage={newMessage}
                             setNewMessage={setNewMessage}
                             sendMessage={sendMessage}
+                            userData={userData}
                          />
                     ) : (
                         <div className="flex items-center justify-center h-full">

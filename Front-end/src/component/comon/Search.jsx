@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default function Search() {
+export default function Search({ searchTerm, setSearchTerm }) {
   return (
     <>
         <div className=" w-full rounded-xl bg-gray-400 bg-opacity-15 p-3">
@@ -13,7 +13,13 @@ export default function Search() {
                 <h1 className=' p-1 text-white text-sm '>Groups</h1>
             </div>
             <div className=" relative pt-3">
-                <input type="text" className=' w-full h-10 rounded-md border border-gray-400 bg-white bg-opacity-5 pl-2' placeholder=' Search ...' />
+                <input 
+                    value={searchTerm} 
+                    onChange={(e) => setSearchTerm(e.target.value)} 
+                    type="text" 
+                    className=' w-full h-10 rounded-md border border-gray-400 bg-white bg-opacity-5 pl-2' 
+                    placeholder=' Search ...' 
+                />
                 <div className=" w-6 h-6 absolute top-5 right-3"> <i class="fa-solid fa-magnifying-glass fa-lg text-gray-400"></i> </div>
             </div>
         </div> 

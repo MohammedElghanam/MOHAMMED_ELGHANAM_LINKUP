@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default function Chat({ user, messages, newMessage, setNewMessage, sendMessage }) {
+export default function Chat({ user, messages, newMessage, setNewMessage, sendMessage, userData }) {
   return (
     <>
         <div className="flex flex-col h-full bg-gray-100 bg-opacity-5">
@@ -27,7 +27,7 @@ export default function Chat({ user, messages, newMessage, setNewMessage, sendMe
             <div className="flex-1 justify-start justify-items-stretch p-4 overflow-y-auto snap-y snap-mandatory " style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
             
                 {messages.map((msg, index) => (
-                    msg.senderId === 'myUserId' ? (
+                    msg.senderId === userData.userId ? (
                         <div key={index} className="flex justify-end items-start gap-3">
                         <div className="p-2 mb-2 rounded max-w-[70%] bg-[#FF00A6] text-white">
                             {msg.content}

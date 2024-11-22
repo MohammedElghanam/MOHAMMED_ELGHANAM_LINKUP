@@ -1,9 +1,7 @@
 import React from 'react'
 import useUsers from '../../hooks/useUsers'
 
-export default function UserList({ onSelectUser }) {
-
-    const { users } = useUsers();
+export default function UserList({ onSelectUser, users }) {
 
     return (
     <>
