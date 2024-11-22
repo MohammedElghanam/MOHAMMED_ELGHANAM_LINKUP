@@ -1,56 +1,62 @@
-import React, { useState, useEffect } from 'react';
-import io from 'socket.io-client';
+// import React, { useState, useEffect } from 'react';
+// import io from 'socket.io-client';
 import UserList from './UserList'; 
 import ChatWindow from './ChatWindow'; 
+import useWebSocket from '../../hooks/useWebSocket';
 
-const socket = io('ws://localhost:5002', {
-  transports: ['websocket'], 
-});
+// const socket = io('ws://localhost:5002', {
+//   transports: ['websocket'], 
+// });
 
 export default function ChatApp() {
-  const [selectedUser, setSelectedUser] = useState(null); 
-  const [messages, setMessages] = useState([]); 
-  const [newMessage, setNewMessage] = useState(''); 
+  // const [selectedUser, setSelectedUser] = useState(null); 
+  // const [messages, setMessages] = useState([]); 
+  // const [newMessage, setNewMessage] = useState(''); 
 
-  useEffect(() => {
+
+
+  // useEffect(() => {
     
-    socket.on('newMessage', (message) => {
-      console.log('Received message:', message);
-      if (message.senderId === selectedUser?.id || message.receiverId === selectedUser?.id) {
-        setMessages((prev) => [...prev, message]);
-      }
-    });
+  //   socket.on('newMessage', (message) => {
+  //     console.log('Received message:', message);
+  //     if (message.senderId === selectedUser?.id || message.receiverId === selectedUser?.id) {
+  //       setMessages((prev) => [...prev, message]);
+  //     }
+  //   });
 
-    return () => {
-      // socket.disconnect();
-    };
-  }, [selectedUser]);
+  //   return () => {
+  //     // socket.disconnect();
+  //   };
+  // }, [selectedUser]);
 
-  const fetchMessages = (user) => {
-    setSelectedUser(user); 
-    socket.emit('getMessages', { senderId: 'myUserId', receiverId: user.id }); 
-    socket.on('messageHistory', (data) => { setMessages(data) }); 
-    // console.log(data);
+  // const fetchMessages = (user) => {
+  //   setSelectedUser(user); 
+  //   socket.emit('getMessages', { senderId: 'myUserId', receiverId: user.id }); 
+  //   socket.on('messageHistory', (data) => { setMessages(data) }); 
+  //   // console.log(data);
     
-  };
+  // };
 
-  const sendMessage = () => {
-    if (socket.connected) {  
-      if (newMessage.trim() && selectedUser) {
-        const data = {
-          content: newMessage,
-          senderId: 'myUserId',
-          receiverId: selectedUser.id,
-        };
+  // const sendMessage = () => {
+  //   if (socket.connected) {  
+  //     if (newMessage.trim() && selectedUser) {
+  //       const data = {
+  //         content: newMessage,
+  //         senderId: 'myUserId',
+  //         receiverId: selectedUser.id,
+  //       };
   
-        console.log(data);
-        socket.emit('sendMessage', data); 
-        setNewMessage(''); 
-      }
-    } else {
-      console.log("Socket is not connected, please wait.");
-    }
-  };
+  //       console.log(data);
+  //       socket.emit('sendMessage', data); 
+  //       setNewMessage(''); 
+  //     }
+  //   } else {
+  //     console.log("Socket is not connected, please wait.");
+  //   }
+  // };
+
+  const { selectedUser, messages, newMessage, setNewMessage, fetchMessages, sendMessage } = useWebSocket();
+    
 
   return (
     <div className="flex h-screen">

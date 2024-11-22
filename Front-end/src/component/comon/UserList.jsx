@@ -1,7 +1,7 @@
 import React from 'react'
 import useUsers from '../../hooks/useUsers'
 
-export default function UserList() {
+export default function UserList({ onSelectUser }) {
 
     const { users } = useUsers();
 
@@ -10,7 +10,7 @@ export default function UserList() {
         <div className="w-full h-[490px] flex flex-col gap-3 rounded-xl p-2 overflow-y-auto snap-y snap-mandatory" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }} >
 
             {users.map((user) => (
-                <div key={user.id} className=" flex justify-between items-center gap-3 snap-center">
+                <div key={user.id} onClick={() => onSelectUser(user)} className=" flex justify-between items-center gap-3 snap-center cursor-pointer">
                     <div className=" flex justify-start items-center gap-3 ">
                         <div className=" w-12 h-12 rounded-full bg-red-500">
                             <img className=' rounded-full ' src="/default.jpg" alt="" />

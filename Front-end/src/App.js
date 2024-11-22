@@ -5,6 +5,8 @@ import Login from './component/auth/login';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import ChatApp from './component/pages/chatApp';
 import Test from './component/pages/test';
+import Notfound from './component/pages/Notfound';
+import Protected from './hooks/useProtected';
 
 function App() {
   return (
@@ -14,7 +16,15 @@ function App() {
           <Route index='/' element={<Login />}/>
           <Route path='/register' element={<Register />} />
           <Route path='/chat' element={<ChatApp />} />
-          <Route path='/test' element={ <Test /> } />
+          <Route 
+            path='/test' 
+            element={ 
+              <Protected>
+                <Test />
+              </Protected>
+            }
+          />
+          <Route path='/notfound' element={ <Notfound /> } />
                     
         </Routes>
       </BrowserRouter>

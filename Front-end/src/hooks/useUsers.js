@@ -8,7 +8,12 @@ const useUsers = () => {
 
         const fetchUsers = async () => {
             try {
-                const response = await axios.get('http://localhost:5000/auth/getUsers');
+                const token = localStorage.getItem('token');
+                const response = await axios.get('http://localhost:5000/auth/getUsers', {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                });
                 setUsers(response.data.data);
                 console.log(response.data.data);                
             } catch (error) {

@@ -1,7 +1,7 @@
-import { Body, Controller, Get, Post, Res } from '@nestjs/common';
+import { Body, Controller, Get, Post, Req, Res } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { RegisterDto } from './authDto/register.dto';
-import { Response } from 'express';
+import { Request, Response } from 'express';
 
 @Controller('auth')
 export class AuthController {
@@ -38,8 +38,15 @@ export class AuthController {
     }
 
     @Get('/getUsers')
-    async getUsers(@Res() res: Response) {
-        const result = await this.authservice.getUsers();
+    async getUsers(@Req() req: Request, @Res() res: Response) {
+
+        const Id = req.user; 
+        
+        if (!Id) {
+          return res.status(401).json({ success: false, message: 'Unauthorized' });
+        }
+
+        const result = await this.authservice.getUsers(Id);
         if (result.success) {
           res.status(200).json(result);
         } else {

@@ -4,8 +4,12 @@ import Search from '../comon/Search'
 import UserList from '../comon/UserList'
 import MyInfo from '../comon/MyInfo'
 import Chat from '../comon/Chat'
+import useWebSocket from '../../hooks/useWebSocket'
 
 export default function Test() {
+
+    const { selectedUser, messages, newMessage, setNewMessage, fetchMessages, sendMessage } = useWebSocket();
+
   return (
     <> 
         <div className=" w-full h-screen flex flex-col justify-start items-center fixed bg-gray-900">
@@ -20,7 +24,7 @@ export default function Test() {
 
                             <Search />
 
-                            <UserList />
+                            <UserList onSelectUser={fetchMessages} />
 
                         </div>
 
@@ -29,7 +33,20 @@ export default function Test() {
                     </div>
 
                     <div className=" col-span-9">
-                        <Chat />
+                    {selectedUser ? (
+                        <Chat 
+                            user={selectedUser}
+                            messages={messages}
+                            newMessage={newMessage}
+                            setNewMessage={setNewMessage}
+                            sendMessage={sendMessage}
+                         />
+                    ) : (
+                        <div className="flex items-center justify-center h-full">
+                            <p className="text-gray-500">Select a user to start chatting</p>
+                        </div>
+                    )}
+                        
                     </div>
 
                 </div>

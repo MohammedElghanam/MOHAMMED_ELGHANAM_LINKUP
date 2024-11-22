@@ -58,9 +58,9 @@ export class AuthService {
         }
     }
 
-    async getUsers(): Promise <ResponseMessage> {
+    async getUsers(id: string): Promise <ResponseMessage> {
         try {
-            const users = await this.userModel.find();
+            const users = await this.userModel.find({ _id: { $ne: id}}).exec();
             return {
                 success: true,
                 message: 'Users retrived successfly',
