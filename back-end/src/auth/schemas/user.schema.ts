@@ -12,6 +12,9 @@ export class User {
     @Prop()
     password: string;
 
+    @Prop({ type: Number, default: 0 })
+    unreadMessages: Number;
+
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);

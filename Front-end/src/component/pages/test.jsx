@@ -11,7 +11,7 @@ import useUsers from '../../hooks/useUsers';
 export default function Test({ userData }) {
 
     const { selectedUser, messages, newMessage, setNewMessage, fetchMessages, sendMessage, setAuth } = useWebSocket();
-    const { searchTerm, setSearchTerm, filteredUsers } = useUsers();
+    const { searchTerm, setSearchTerm, filteredUsers, saveUserId } = useUsers();
 
     useEffect(() => {
         setAuth(userData.userId);
@@ -30,7 +30,7 @@ export default function Test({ userData }) {
 
                             <Search searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
 
-                            <UserList onSelectUser={fetchMessages} users={filteredUsers} />
+                            <UserList onSelectUser={fetchMessages} users={filteredUsers} saveUserId={saveUserId} />
 
                         </div>
 

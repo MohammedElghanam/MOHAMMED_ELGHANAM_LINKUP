@@ -5,12 +5,14 @@ const useUsers = () => {
     const [users, setUsers] = useState([]);
     const [searchTerm, setSearchTerm] = useState(""); 
     const [filteredUsers, setFilteredUsers] = useState([]);
+    const [saveUser, setsetSaveUser] = useState({});
 
     useEffect(() => {
         const fetchUsers = async () => {
             try {
                 const token = localStorage.getItem('token');
-                const response = await axios.get('http://localhost:5000/auth/getUsers', {
+
+                const response = await axios.post('http://localhost:5000/auth/getUsers', { saveUser }, {
                     headers: {
                         Authorization: `Bearer ${token}`,
                     },
@@ -35,7 +37,11 @@ const useUsers = () => {
         setFilteredUsers(filtered);
     }, [searchTerm, users]); 
 
-    return { users, searchTerm, setSearchTerm, filteredUsers };
+    const saveUserId = (user) => {
+        setsetSaveUser(user);
+    }
+
+    return { users, searchTerm, setSearchTerm, filteredUsers, saveUserId };
 }
 
 export default useUsers;

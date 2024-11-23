@@ -7,6 +7,7 @@ import { PassportModule } from '@nestjs/passport';
 import { JwtModule } from '@nestjs/jwt';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { AuthMiddleware } from 'src/common/auth.middleware';
+import { Message, MessageSchema } from 'src/chat/schemas/message.schema';
 
 @Module({
   imports:[
@@ -25,7 +26,7 @@ import { AuthMiddleware } from 'src/common/auth.middleware';
       }
     }),
 
-    MongooseModule.forFeature([{ name: 'User', schema: UserSchema}])
+    MongooseModule.forFeature([{ name: 'User', schema: UserSchema}, { name: Message.name, schema: MessageSchema }])
   ],
   controllers: [AuthController],
   providers: [AuthService]
@@ -34,6 +35,6 @@ export class AuthModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
     consumer
       .apply(AuthMiddleware) 
-      .forRoutes({ path: 'auth/getUsers', method: RequestMethod.GET });
+      .forRoutes({ path: 'auth/getUsers', method: RequestMethod.POST });
   }
 }

@@ -45,6 +45,7 @@ export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
     }
 
     const savedMessage = await this.chatService.saveMessage(data.content, data.senderId, data.receiverId);
+    await this.chatService.incrementUnreadMessages(data.senderId);
 
     this.server.emit('newMessage', savedMessage);
     // this.server.to(data.receiverId).emit('newMessage', savedMessage);

@@ -37,16 +37,17 @@ export class AuthController {
         }
     }
 
-    @Get('/getUsers')
+    @Post('/getUsers')
     async getUsers(@Req() req: Request, @Res() res: Response) {
 
         const Id = req.user; 
+        const { saveUser } = req.body;
         
         if (!Id) {
           return res.status(401).json({ success: false, message: 'Unauthorized' });
         }
 
-        const result = await this.authservice.getUsers(Id);
+        const result = await this.authservice.getUsers(Id, saveUser);
         if (result.success) {
           res.status(200).json(result);
         } else {
